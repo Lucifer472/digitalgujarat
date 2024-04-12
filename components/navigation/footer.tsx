@@ -4,7 +4,7 @@ import { footerLinks } from "@/constant";
 
 const Footer = () => {
   return (
-    <footer className="w-full min-h-24 bg-[#0072aa] bg-[url('/textured_stripes_brand_primary.png')]">
+    <footer className="w-full min-h-24 bg-[#0072aa]">
       <div className="w-full min-h-24 py-2 max-w-6xl mx-auto px-4 sm:px-2 flex items-center justify-center flex-col">
         <div className="flex items-center justify-center flex-wrap">
           {footerLinks.map((f) => (

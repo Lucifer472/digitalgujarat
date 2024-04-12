@@ -17,32 +17,31 @@ const PanCardApply = () => {
     <main>
       <div className="w-full flex flex-col gap-y-1">
         <div className="w-full h-20 flex items-center justify-center bg-[#0072aa]">
-          <h2 className="text-white text-2xl font-medium max-w-7xl mx-auto px-2">
-            भारतीय पैन कार्ड
+          <h2 className="text-white text-lg font-medium max-w-7xl mx-auto px-2">
+            PAN Card Application Online
           </h2>
         </div>
         <div className="max-w-7xl mx-auto w-full flex items-start justify-start my-1 px-2">
           <p className="font-semibold">
-            भारतीय पैन कार्ड - देखें अपना पैन कार्ड कैसे प्राप्त करें ⬇️
+            Get Your PAN Card Online: A Quick & Easy Guide
           </p>
         </div>
         <Ad1 />
         <div className="max-w-7xl mx-auto w-full flex items-start justify-start my-1">
           <p className="w-full text-justify px-2">
-            जानें कि अपना भारतीय पैन कार्ड जल्दी और आसानी से कैसे प्राप्त करें!
-            🌐📝 भारत में कर जीवन के लिए पैन कार्ड आवश्यक है, जो प्रत्येक
-            व्यक्ति के लिए एक विशिष्ट पहचानकर्ता के रूप में कार्य करता है। इस
-            लेख में, हम आपको अपना घर छोड़े बिना, अपने पैन कार्ड के लिए ऑनलाइन
-            आवेदन करने की सरल और सुविधाजनक प्रक्रिया के बारे में मार्गदर्शन
-            करेंगे। 🏠💼 हमारे सुझावों और विस्तृत चरण-दर-चरण मार्गदर्शिका के
-            साथ, कुछ ही समय में आपका कार्ड आपके हाथों में होगा, और आप जटिलताओं
-            के बिना अपने कर दायित्वों को पूरा करने के लिए तैयार होंगे! 💳🇮🇳
+            Learn how to get your Indian PAN Card in as little as 10 minutes! A
+            PAN card is essential for tax life in India, acting as a unique
+            identifier for every individual. In this article, we&apos;ll guide
+            you through the simple and convenient process of applying for your
+            PAN card online, without leaving your home. With our tips and
+            detailed step-by-step guide, you&apos;ll have your card in no time,
+            and you&apos;ll be ready to meet your tax obligations without
+            complications! We&apos;ll also cover eligibility requirements to
+            ensure a smooth application process.
           </p>
         </div>
         <Link
-          href={
-            "/https://Digital Gujarat.in/pan-card-application-online-complete-information-2024"
-          }
+          href={"/pan-card-application-online-2024-complete-info"}
           className="max-w-7xl mx-auto w-full flex items-center justify-center my-1 px-2"
         >
           <Image
@@ -53,22 +52,37 @@ const PanCardApply = () => {
           />
         </Link>
         <Ad2 />
-        <div className="max-w-7xl mx-auto w-full flex items-center justify-center flex-col my-4 px-2 gap-y-2">
+        <div className="max-w-7xl mx-auto w-full grid grid-cols-2 flex-col my-4 px-2 gap-2">
           <Link
-            href={
-              "/https://Digital Gujarat.in/pan-card-application-online-complete-information-2024"
-            }
-            className="w-full rounded-full bg-[#0072aa] text-2xl hover:bg-[#005eaa] text-white text-center py-4 md:py-6"
-          >
-            अनुरोध करना सीखें
-          </Link>
-          <Link
-            href={
-              "/https://Digital Gujarat.in/pan-card-application-online-complete-information-2024"
-            }
-            className="w-full rounded-full bg-[#0072aa] text-2xl hover:bg-[#005eaa] text-white text-center py-4 md:py-6"
+            href={"/pan-card-application-online-2024-complete-info"}
+            className="w-full rounded-md bg-[#0072aa] text-3xl hover:bg-[#005eaa] text-white text-center col-span-2 py-4 md:py-6"
           >
             ज्यादा जानें
+          </Link>
+          <Link
+            href={"/download-epan-card-get-epan-complete-information"}
+            className="w-full rounded-md bg-[#0072aa] text-xl hover:bg-[#005eaa] text-white text-center col-span-1 py-4 md:py-6"
+          >
+            Download
+          </Link>
+
+          <Link
+            href={"/pan-card-application-online-2024-complete-info"}
+            className="w-full rounded-md bg-[#0072aa] text-xl hover:bg-[#005eaa] text-white text-center col-span-1 py-4 md:py-6"
+          >
+            Name Change
+          </Link>
+          <Link
+            href={"/how-to-change-photo-and-signature-in-pan-card-2024"}
+            className="w-full rounded-md bg-[#0072aa] text-xl hover:bg-[#005eaa] text-white text-center col-span-1 py-4 md:py-6"
+          >
+            Photo
+          </Link>
+          <Link
+            href={"/pan-card-application-online-2024-complete-info"}
+            className="w-full rounded-md bg-[#0072aa] text-xl hover:bg-[#005eaa] text-white text-center col-span-1 py-4 md:py-6"
+          >
+            Date of Birth
           </Link>
         </div>
         <Ad3 />

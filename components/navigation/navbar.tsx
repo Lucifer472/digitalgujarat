@@ -12,7 +12,7 @@ const Navbar = () => {
   const [nav, setNav] = useState(true);
 
   return (
-    <nav className="w-full min-h-16 bg-[#0072aa] bg-[url('/textured_stripes_brand_primary.png')] mb-4 shadow">
+    <nav className="w-full min-h-16 bg-[#0072aa] mb-4 shadow">
       <div className="w-full min-h-16 max-w-6xl mx-auto px-4 sm:px-2 flex items-center justify-between">
         <div className="hidden sm:block">
           <Logo />
