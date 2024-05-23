@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 export const AdsWrapper = ({
@@ -14,7 +14,6 @@ export const AdsWrapper = ({
   divSize?: { x: number; y: number };
 }) => {
   const pathname = usePathname();
-  const [show, setShow] = useState(true);
 
   window.googletag = window.googletag || { cmd: [] };
 
@@ -38,13 +37,6 @@ export const AdsWrapper = ({
         }
       });
 
-      googletag.pubads().addEventListener("slotRenderEnded", (e) => {
-        if (e.slot) {
-          if (e.isEmpty) {
-            setShow(false);
-          }
-        }
-      });
       googletag.display(id);
     });
     return () => {
@@ -57,19 +49,15 @@ export const AdsWrapper = ({
   }, [pathname, id, label, size]);
 
   return (
-    <>
-      {show && (
-        <div className="text-center flex w-full items-center justify-center flex-col">
-          <span className="text-[10px]">SPONSORED</span>
-          <div
-            id={id}
-            style={{
-              minWidth: divSize ? divSize.x : "336px",
-              minHeight: divSize ? divSize.y : "280px",
-            }}
-          ></div>
-        </div>
-      )}
-    </>
+    <div className="text-center flex w-full items-center justify-center flex-col">
+      <span className="text-[10px]">SPONSORED</span>
+      <div
+        id={id}
+        style={{
+          minWidth: divSize ? divSize.x : "336px",
+          minHeight: divSize ? divSize.y : "280px",
+        }}
+      ></div>
+    </div>
   );
 };
