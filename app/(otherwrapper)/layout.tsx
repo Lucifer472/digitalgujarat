@@ -17,16 +17,16 @@ const OtherLayout = ({ children }: { children: React.ReactNode }) => {
       <Script
         strategy="beforeInteractive"
         async
-        src="https://www.googletagmanager.com/gtag/js?id=G-R9J2KRQV13"
+        src="https://www.googletagmanager.com/gtag/js?id=G-34SFL60RXL"
         id="google-analytics"
       />
       <Script strategy="beforeInteractive" id="google-analytics-body">
         {`
-          window.dataLayer = window.dataLayer || [];
+           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
-          gtag('config', 'G-R9J2KRQV13');
+          gtag('config', 'G-34SFL60RXL');
         `}
       </Script>
       {children}
