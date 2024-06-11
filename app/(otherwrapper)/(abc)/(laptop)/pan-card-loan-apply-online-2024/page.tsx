@@ -26,7 +26,10 @@ const bPage = async () => {
       >
         No ❌
       </ExtraButton>
-      <ArticleViewDemo blogData={data?.blog?.toString() as string} />
+      <ArticleViewDemo
+        title={data?.title as string}
+        blogData={data?.blog?.toString() as string}
+      />
     </section>
   );
 };

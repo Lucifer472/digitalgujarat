@@ -5,11 +5,11 @@ import ArticleViewDemo from "@/components/views/article-view-demo";
 
 import { getBlogFromUrl } from "@/lib/blog";
 
-const link = "/pan-card-loan-apply-online-2024";
+const link = "/maadhaar-official-app-for-updates";
 
 const aPage = async () => {
   const data = await getBlogFromUrl(
-    "pm-yashasvi-scheme-2024-scholarship-online-registration-yetntaacin"
+    "how-to-ayushman-card-process-and-download"
   );
 
   return (
@@ -27,7 +27,10 @@ const aPage = async () => {
       >
         No ❌
       </ExtraButton>
-      <ArticleViewDemo blogData={data?.blog?.toString() as string} />
+      <ArticleViewDemo
+        title={data?.title as string}
+        blogData={data?.blog?.toString() as string}
+      />
     </section>
   );
 };
