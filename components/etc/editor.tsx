@@ -36,7 +36,7 @@ const Editor = ({
     if (!editorRef.current) {
       editorRef.current = new EditorJS({
         holder: "editorjs",
-        data: JSON.parse(initialData),
+        data: initialData ? JSON.parse(initialData) : null,
         tools: {
           header: {
             class: Header,
