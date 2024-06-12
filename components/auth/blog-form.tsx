@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 import {
   Form,
@@ -26,7 +27,6 @@ import { FaqEditor } from "@/components/etc/faq-editor";
 
 import { BlogSchema } from "@/schema";
 import { createBlog } from "@/action/create-blog";
-import toast from "react-hot-toast";
 import { Category } from "@/constant";
 
 const BlogForm = () => {

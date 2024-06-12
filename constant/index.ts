@@ -82,3 +82,22 @@ export const Category = [
     value: "exams",
   },
 ];
+
+export const adminLinks = [
+  {
+    label: "Home",
+    link: "/",
+  },
+  {
+    label: "Add Blogs",
+    link: "/admin",
+  },
+  {
+    label: "Blog List",
+    link: "/admin/list",
+  },
+  {
+    label: "Add User",
+    link: "/",
+  },
+];

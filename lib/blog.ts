@@ -32,6 +32,33 @@ export const addBlog = async (
   }
 };
 
+export const updateBlogById = async (
+  value: z.infer<typeof BlogSchema>,
+  img: string,
+  id: number
+) => {
+  try {
+    await db.blog.update({
+      where: {
+        id,
+      },
+      data: {
+        title: value.title,
+        img: img,
+        keywords: value.keywords,
+        description: value.desc,
+        blog: value.blog,
+        faq: value.faq,
+        category: value.category,
+      },
+    });
+
+    return { success: "Blog Updated!" };
+  } catch (error) {
+    return { error: "Something went wrong!" };
+  }
+};
+
 export const getBlogFromUrl = async (url: string) => {
   try {
     const data = await db.blog.findUnique({
@@ -156,4 +183,9 @@ export const getSkipBlog = async (id: number) => {
   } catch (error) {
     return null;
   }
+};
+
+export const getEditBlogs = async (options: any) => {
+  const data = await db.blog.findMany(options);
+  return data;
 };
