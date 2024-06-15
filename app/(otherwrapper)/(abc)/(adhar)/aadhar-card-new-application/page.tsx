@@ -5,7 +5,7 @@ import ArticleViewDemo from "@/components/views/article-view-demo";
 
 import { getBlogFromUrl } from "@/lib/blog";
 
-const link = "/how-to-change-name-in-aadhar";
+const link = "/-aadhar-card-download-register-update";
 
 const aPage = async () => {
   const data = await getBlogFromUrl("aadhar-card-new-application-2024");

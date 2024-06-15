@@ -5,7 +5,7 @@ import ArticleViewDemo from "@/components/views/article-view-demo";
 
 import { getBlogFromUrl } from "@/lib/blog";
 
-const link = "/maadhaar-app-download";
+const link = "/how-to-change-name-in-aadhar";
 
 const bPage = async () => {
   const data = await getBlogFromUrl(
