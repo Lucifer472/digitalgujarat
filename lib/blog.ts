@@ -203,7 +203,45 @@ export const getSkipBlog = async (id: number) => {
   }
 };
 
-export const getEditBlogs = async (options: any) => {
-  const data = await db.blog.findMany(options);
+export const getEditBlogs = async (q?: string) => {
+  if (!q) {
+    const data = await db.blog.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      select: {
+        url: true,
+        id: true,
+        title: true,
+      },
+    });
+
+    return data;
+  }
+
+  const data = await db.blog.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+    where: {
+      OR: [
+        {
+          title: {
+            contains: q,
+          },
+        },
+        {
+          url: {
+            contains: q,
+          },
+        },
+      ],
+    },
+    select: {
+      url: true,
+      id: true,
+      title: true,
+    },
+  });
   return data;
 };
