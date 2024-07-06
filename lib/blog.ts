@@ -94,6 +94,9 @@ export const getBlogs = async (page: number) => {
       orderBy: {
         createdAt: "desc",
       },
+      where: {
+        isPending: false,
+      },
       include: {
         Author: {
           include: {
@@ -117,6 +120,7 @@ export const getBlogsByCat = async (cat: string, page: number) => {
       take: 11,
       where: {
         category: cat,
+        isPending: false,
       },
       orderBy: {
         createdAt: "desc",
@@ -146,7 +150,7 @@ export const getAllBlogs = async () => {
         updatedAt: true,
       },
       orderBy: {
-        createdAt: "desc",
+        createdAt: "asc",
       },
     });
 
@@ -162,6 +166,7 @@ export const getRecentBlogs = async (authrId: string) => {
     const data = await db.blog.findMany({
       where: {
         authrId,
+        isPending: false,
       },
       orderBy: {
         createdAt: "desc",
@@ -184,6 +189,7 @@ export const getSkipBlog = async (id: number) => {
             id,
           },
         ],
+        isPending: false,
       },
       orderBy: {
         createdAt: "desc",
