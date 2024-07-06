@@ -2,7 +2,7 @@
  * Protected Routes
  */
 
-export const adminRoutes = ["/admin"];
+export const adminRoutes = "/admin";
 
 /**
  * Sing up routes
