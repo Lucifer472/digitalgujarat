@@ -6,8 +6,9 @@ import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
+import { DeleteBlogById } from "@/action/delete-blog";
 
-const EditBlogList = ({
+const BlogList = ({
   data,
 }: {
   data: {
@@ -26,23 +27,15 @@ const EditBlogList = ({
       return; // User canceled the deletion
     }
 
-    fetch("/api/delete/blog", {
-      method: "POST",
-      body: JSON.stringify({ id }),
-      headers: {
-        "Content-Type": "application/json", // Specify the content type
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.Message === "Blog has been Deleted!") {
-          toast.success(data.Message);
-          router.refresh();
-        } else {
-          toast.error("An Error has Occurred");
-          router.refresh();
-        }
-      });
+    DeleteBlogById(id).then((data) => {
+      if (data.success) {
+        toast.success(data.success);
+        router.refresh();
+      } else {
+        toast.error("An Error has Occurred");
+        router.refresh();
+      }
+    });
   };
 
   return (
@@ -72,7 +65,7 @@ const EditBlogList = ({
           </div>
           <div className="col-span-3 text-center py-2 px-4 flex items-center justify-evenly gap-1">
             <Button variant={"default"} asChild>
-              <Link href={`/admin/edit/${data.url}`}>Edit</Link>
+              <Link href={`/admin/${data.url}`}>Edit</Link>
             </Button>
             <Button variant={"outline"} asChild>
               <Link href={`/${data.url}`}>View</Link>
@@ -90,4 +83,4 @@ const EditBlogList = ({
   );
 };
 
-export default EditBlogList;
+export default BlogList;

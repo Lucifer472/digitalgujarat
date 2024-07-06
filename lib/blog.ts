@@ -21,6 +21,10 @@ export const addBlog = async (
         faq: value.faq,
         category: value.category,
         authrId: userId,
+        isIndex: value.isIndex,
+        isPending: value.isPending === "true" ? true : false,
+        connect: value.connect,
+        pageText: value.pageText === "" ? null : value.pageText,
       },
     });
 
@@ -34,6 +38,8 @@ export const addBlog = async (
 
 export const updateBlogById = async (
   value: z.infer<typeof BlogSchema>,
+  userId: string,
+  url: string,
   img: string,
   id: number
 ) => {
@@ -49,7 +55,13 @@ export const updateBlogById = async (
         description: value.desc,
         blog: value.blog,
         faq: value.faq,
+        authrId: userId,
+        url: url,
         category: value.category,
+        isIndex: value.isIndex,
+        isPending: value.isPending === "true" ? true : false,
+        connect: value.connect,
+        pageText: value.pageText === "" ? null : value.pageText,
       },
     });
 

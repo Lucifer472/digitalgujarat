@@ -21,7 +21,7 @@ export const updateBlog = async (v: z.infer<typeof BlogSchema>, id: number) => {
     return { error: "Please Login Again!" };
   }
 
-  let img = " ";
+  let img = "https://images.drivingexamexpert.com/blogs/6683d1444482e.png";
   const block = JSON.parse(data.blog);
   for (const e of block.blocks) {
     if (e.type === "image") {
@@ -30,7 +30,16 @@ export const updateBlog = async (v: z.infer<typeof BlogSchema>, id: number) => {
     }
   }
 
-  const blog = await updateBlogById(data, img, id);
+  const blog = await updateBlogById(
+    data,
+    session.user.id,
+    data.title
+      .toLowerCase()
+      .replace(/[^\w\s]|_/g, "")
+      .replace(/\s+/g, "-"),
+    img,
+    id
+  );
   if (blog.success) {
     return { success: "Blog Updated Successfully" };
   }

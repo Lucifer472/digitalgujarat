@@ -145,3 +145,5 @@ export const months = [
   "November",
   "December",
 ];
+
+export const indexValues = ["one", "two", "three"];

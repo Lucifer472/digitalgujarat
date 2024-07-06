@@ -26,4 +26,19 @@ export const BlogSchema = z.object({
   category: z.string().min(1).max(50),
   blog: z.string(),
   faq: z.string(),
+  isPending: z.enum(["true", "false"]),
+  isIndex: z.enum(["one", "two", "three"]),
+  connect: z.string().nullable(),
+  pageText: z.string().nullable(),
+});
+
+const AdSchema = z.object({
+  adId: z.string(),
+  label: z.string(),
+  sizeX: z.string(),
+  sizeY: z.string(),
+});
+
+export const AllAdSchema = z.object({
+  ads: z.array(AdSchema),
 });

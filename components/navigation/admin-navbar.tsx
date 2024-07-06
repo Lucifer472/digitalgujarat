@@ -1,13 +1,9 @@
 "use client";
 import Link from "next/link";
-import React from "react";
-import { usePathname } from "next/navigation";
-
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-
-import { adminLinks } from "@/constant";
 import { logOut } from "@/action/logout-user";
+import { Separator } from "@/components/ui/separator";
+import { usePathname } from "next/navigation";
 
 const AdminNavbar = () => {
   const pathname = usePathname();
@@ -18,14 +14,42 @@ const AdminNavbar = () => {
   return (
     <nav className="w-full max-w-5xl mx-auto h-16 border border-gray-300 shadow-md rounded-xl my-8">
       <div className="w-full flex items-center justify-center gap-x-2 h-16 py-2">
-        {adminLinks.map((a) => (
-          <React.Fragment key={a.label}>
-            <Button variant={"link"} size={"sm"}>
-              <Link href={a.link}>{a.label}</Link>
-            </Button>
-            <Separator orientation="vertical" />
-          </React.Fragment>
-        ))}
+        <Button variant={"link"} size={"sm"}>
+          <Link href={"/"}>Home</Link>
+        </Button>
+        <Separator orientation="vertical" />
+        <Button
+          variant={"link"}
+          size={"sm"}
+          className={pathname === "/admin" ? "underline" : ""}
+        >
+          <Link href={"/admin"}>Add Blogs</Link>
+        </Button>
+        <Separator orientation="vertical" />{" "}
+        <Button
+          variant={"link"}
+          size={"sm"}
+          className={pathname === "/admin/list" ? "underline" : ""}
+        >
+          <Link href={"/admin/list"}>List Blogs</Link>
+        </Button>
+        <Separator orientation="vertical" />
+        <Button
+          variant={"link"}
+          size={"sm"}
+          className={pathname === "/admin/user" ? "underline" : ""}
+        >
+          <Link href={"/admin/user"}>Add User</Link>
+        </Button>
+        <Separator orientation="vertical" />
+        <Button
+          variant={"link"}
+          size={"sm"}
+          className={pathname === "/admin/ads" ? "underline" : ""}
+        >
+          <Link href={"/admin/ads"}>Ads</Link>
+        </Button>
+        <Separator orientation="vertical" />
         <Button variant={"link"} onClick={handleLogout} size={"sm"}>
           Logout
         </Button>

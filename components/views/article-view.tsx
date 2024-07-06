@@ -5,7 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
-import { Ad4, Ad5, Ad6, Ad7, LargeAd } from "../ads/ads";
+import { Ad4, Ad5, Ad6, LargeAd } from "../ads/ads";
 
 const ArticleView = ({
   blogData,
@@ -35,16 +35,9 @@ const ArticleView = ({
     data: Ad6,
   };
 
-  const adElement4 = {
-    type: "Ad",
-    data: Ad7,
-  };
-
   blog.blocks.splice(1, 0, adElement1);
   blog.blocks.splice(4, 0, adElement2);
   blog.blocks.splice(7, 0, adElement3);
-  blog.blocks.splice(10, 0, adElement4);
-
   return (
     <div className="px-4 lg:px-0">
       <article className="w-full sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl sm:mx-auto h-full flex flex-col items-start justify-start gap-y-1  prose blog-styles">

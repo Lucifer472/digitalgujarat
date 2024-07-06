@@ -2,15 +2,30 @@
 
 import { AdsWrapper } from "@/components/wrappers/ad-wrapper";
 import ClientWrapper from "@/components/wrappers/client-wrapper";
+import Script from "next/script";
 
 export const Ad1 = () => {
   return (
     <ClientWrapper>
-      <AdsWrapper
+      {/* <AdsWrapper
         id="div-gpt-ad-1719211298206-0"
         label="/22989534981/DG_15_336X280"
         size={[336, 280]}
-      />
+      /> */}
+      <>
+        <Script id="ad-1" strategy="lazyOnload">
+          {`
+            google_ad_client = "ca-pub-5088387678948767";
+google_ad_width = 336;
+google_ad_height = 280;
+`}
+        </Script>
+        <Script
+          src="//pagead2.googlesyndication.com/pagead/show_ads.js"
+          type="text/javascript"
+          strategy="lazyOnload"
+        ></Script>
+      </>
     </ClientWrapper>
   );
 };
@@ -90,13 +105,25 @@ export const Ad7 = () => {
 export const LargeAd = () => {
   return (
     <ClientWrapper>
-      <></>
-      {/* <AdsWrapper
+      <AdsWrapper
         id="div-gpt-ad-1712812433707-0"
-        label="/22725519965/OJS_300X600"
+        label="/22989534981/DG_22_300X600"
         size={[300, 600]}
         divSize={{ x: 300, y: 600 }}
-      /> */}
+      />
+    </ClientWrapper>
+  );
+};
+
+export const SmallAd = () => {
+  return (
+    <ClientWrapper>
+      <AdsWrapper
+        id="div-gpt-ad-1720268508389-0"
+        label="/22989534981/DG_21_300X75"
+        size={[300, 100]}
+        divSize={{ x: 300, y: 100 }}
+      />
     </ClientWrapper>
   );
 };

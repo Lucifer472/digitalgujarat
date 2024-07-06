@@ -18,6 +18,12 @@ enum gender {
   Female
 }
 
+enum isIndex {
+  one
+  two
+  three
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -55,6 +61,12 @@ model Blog {
   blog        Json
   faq         Json?
   category    String?
+
+  isPending    Boolean     @default(false)
+  isIndex      isIndex     @default(one)
+
+  pageText    String?
+  connect     String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

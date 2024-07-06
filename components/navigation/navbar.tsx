@@ -7,12 +7,20 @@ import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
 
 import { navLinks } from "@/constant";
+import { useNavStore } from "@/states/nav-states";
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const [nav, setNav] = useState(true);
+  const isShow = useNavStore((state) => state.isShow);
 
   return (
-    <nav className="w-full min-h-16 bg-[#0072aa] mb-4 shadow">
+    <nav
+      className={cn(
+        "w-full min-h-16 bg-[#0072aa] bg-[url('/textured_stripes_brand_primary.png')] mb-4 shadow",
+        isShow ? "block" : "hidden"
+      )}
+    >
       <div className="w-full min-h-16 max-w-6xl mx-auto px-4 sm:px-2 flex items-center justify-between">
         <div className="hidden sm:block">
           <Logo />

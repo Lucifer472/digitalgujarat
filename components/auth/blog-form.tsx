@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
@@ -21,13 +22,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Editor from "@/components/etc/editor";
 import { Button } from "@/components/ui/button";
 import { FaqEditor } from "@/components/etc/faq-editor";
 
 import { BlogSchema } from "@/schema";
 import { createBlog } from "@/action/create-blog";
-import { Category } from "@/constant";
+import toast from "react-hot-toast";
+import { Category, indexValues } from "@/constant";
+import { LiveBlogSearch } from "./live-blog-search";
 
 const BlogForm = () => {
   const [data, setData] = useState<any>(null);
@@ -40,6 +44,10 @@ const BlogForm = () => {
       faq: "",
       keywords: "",
       title: "",
+      isIndex: "one",
+      connect: null,
+      isPending: "true",
+      pageText: "",
     },
   });
 
@@ -145,6 +153,102 @@ const BlogForm = () => {
                     </SelectContent>
                   </Select>
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="isPending"
+            render={({ field }) => (
+              <FormItem className="space-y-3">
+                <FormLabel>
+                  Pending or Not (Pending Blog Not Available without URL)
+                </FormLabel>
+                <FormControl>
+                  <RadioGroup
+                    onValueChange={field.onChange}
+                    defaultValue={field.value.toString()}
+                    className="flex flex-col space-y-1"
+                  >
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="true" />
+                      </FormControl>
+                      <FormLabel className="font-normal">is Pending</FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="false" />
+                      </FormControl>
+                      <FormLabel className="font-normal">
+                        is Not Pending
+                      </FormLabel>
+                    </FormItem>
+                  </RadioGroup>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="isIndex"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Index Page</FormLabel>
+                <FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {indexValues.map((l) => (
+                        <SelectItem key={l} value={l} className="capitalize">
+                          {l}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormDescription>
+                  Please Select Index for Page (default: One)
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="connect"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Connect to Blog</FormLabel>
+                <FormControl>
+                  <LiveBlogSearch
+                    initialValue={null}
+                    setField={field.onChange}
+                  />
+                </FormControl>
+                <FormDescription>Connect to Next Page</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="pageText"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Page Text</FormLabel>
+                <FormControl>
+                  {/* @ts-ignore */}
+                  <Input placeholder="Main Title" {...field} />
+                </FormControl>
+                <FormDescription>This is the Main Title</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

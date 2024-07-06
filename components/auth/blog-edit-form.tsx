@@ -1,11 +1,11 @@
 "use client";
-import * as z from "zod";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import type { Blog } from "@prisma/client";
 import toast from "react-hot-toast";
 
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,44 +15,41 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
+  SelectItem,
   SelectTrigger,
   SelectValue,
-  SelectItem,
 } from "@/components/ui/select";
-
-import { FaqEditor } from "@/components/etc/faq-editor";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Editor from "@/components/etc/editor";
+import { Button } from "@/components/ui/button";
+import { FaqEditor } from "@/components/etc/faq-editor";
 
-import { Category } from "@/constant";
-import { BlogSchema } from "@/schema";
 import { updateBlog } from "@/action/update-blog";
+import { BlogSchema } from "@/schema";
 
-// Main BLog section
+import { Category, indexValues } from "@/constant";
+import { LiveBlogSearch } from "./live-blog-search";
 
-const BlogEditForm = ({
-  values,
-  blogData,
-  id,
-}: {
-  values: any;
-  id: number;
-  blogData: any;
-}) => {
-  const [data, setData] = useState<any>({});
+const BlogEditForm = ({ values }: { values: Blog }) => {
+  const [data, setData] = useState<any>(JSON.parse(values.blog as string));
 
   const form = useForm<z.infer<typeof BlogSchema>>({
     resolver: zodResolver(BlogSchema),
     defaultValues: {
-      category: values.category,
+      category: values.category ? values.category : "",
       desc: values.description,
-      title: values.title,
-      faq: JSON.parse(values.faq as string),
-      blog: blogData,
       keywords: values.keywords,
+      title: values.title,
+      isIndex: values.isIndex,
+      connect: values.connect,
+      isPending: values.isPending ? "true" : "false",
+      pageText: values.pageText,
+      faq: JSON.parse(values.faq as string),
     },
   });
 
@@ -60,122 +57,216 @@ const BlogEditForm = ({
     form.setValue("blog", JSON.stringify(data));
   }, [data, form]);
 
-  function onSubmit(values: z.infer<typeof BlogSchema>) {
-    updateBlog(values, id)
-      .then((data) => {
-        if (data.success) {
-          toast.success("Blog Successfully updated!");
-          form.reset();
-        }
+  const onSubmit = (v: z.infer<typeof BlogSchema>) => {
+    updateBlog(v, values.id).then((res) => {
+      if (res.error) {
+        toast.error(res.error);
+      }
 
-        if (data.error) {
-          toast.error(data.error);
-        }
-      })
-      .catch((e) => {
-        toast.error(e);
-      });
-  }
+      if (res.success) {
+        toast.success(res.success);
+      }
+    });
+  };
+
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 w-full pt-4 py-2"
+        className="space-y-6 w-full min-w-[320px] xx:min-w-[400px] xs:min-w-[500px] sm:min-w-[600px] lg:min-w-[750px]"
       >
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input placeholder="Title of the Blogs" {...field} />
-              </FormControl>
-              <FormDescription>This is the Title of the blog</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="keywords"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Keywords</FormLabel>
-              <FormControl>
-                <Input placeholder="Keywords of the Blogs" {...field} />
-              </FormControl>
-              <FormDescription>
-                This are the keywords of the blogs
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="desc"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Input placeholder="Description of the Blogs" {...field} />
-              </FormControl>
-              <FormDescription>
-                This are the Description of the blogs
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="category"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Category</FormLabel>
-              <FormControl>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {Category.map((l) => (
-                      <SelectItem
-                        key={l.value}
-                        value={l.value}
-                        className="capitalize"
-                      >
-                        {l.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormDescription>
-                Please Select Category of the Scholarship
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />{" "}
-        <div className="w-full space-y-1">
-          <h2 className="text-lg">Blog:</h2>
-          <Editor setData={setData} initialData={blogData} />
-        </div>
-        <div className="flex flex-col w-full">
-          <span className="pb-4 text-xl font-medium">Add Faqs</span>
-          <div className="w-full border border-slate-200 rounded-md px-10 py-8">
-            <FaqEditor
-              setValue={form.setValue}
-              data={JSON.parse(values.faq as string)}
+        <div className="space-y-4 w-full">
+          <FormField
+            name="title"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem className="w-full flex flex-col items-start justify-start gap-y-1">
+                <Label className="text-lg">Title</Label>
+                <FormControl className="w-full">
+                  <Input
+                    className="w-full"
+                    type="text"
+                    placeholder="Your Title Here..."
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />{" "}
+          <FormField
+            name="keywords"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem className="w-full flex flex-col items-start justify-start gap-y-1">
+                <Label className="text-lg">Keywords</Label>
+                <FormControl className="w-full">
+                  <Input
+                    className="w-full"
+                    type="text"
+                    placeholder="keyword1, keyword2, keyword3..."
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="desc"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem className="w-full flex flex-col items-start justify-start gap-y-1">
+                <Label className="text-lg">Description</Label>
+                <FormControl className="w-full">
+                  <Input
+                    className="w-full"
+                    type="text"
+                    placeholder="Blog Description..."
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />{" "}
+          <FormField
+            name="category"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem className="w-full flex flex-col items-start justify-start gap-y-1">
+                <Label className="text-lg">Category</Label>
+                <FormControl className="w-full">
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select Category of the Blog..." />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {Category.map((c) => (
+                        <SelectItem key={c.value} value={c.value}>
+                          {c.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="isPending"
+            render={({ field }) => (
+              <FormItem className="space-y-3">
+                <FormLabel>
+                  Pending or Not (Pending Blog Not Available without URL)
+                </FormLabel>
+                <FormControl>
+                  <RadioGroup
+                    onValueChange={field.onChange}
+                    defaultValue={field.value.toString()}
+                    className="flex flex-col space-y-1"
+                  >
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="true" />
+                      </FormControl>
+                      <FormLabel className="font-normal">is Pending</FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="false" />
+                      </FormControl>
+                      <FormLabel className="font-normal">
+                        is Not Pending
+                      </FormLabel>
+                    </FormItem>
+                  </RadioGroup>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="isIndex"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Index Page</FormLabel>
+                <FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {indexValues.map((l) => (
+                        <SelectItem key={l} value={l} className="capitalize">
+                          {l}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormDescription>
+                  Please Select Index for Page (default: One)
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="connect"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Connect to Blog</FormLabel>
+                <FormControl>
+                  <LiveBlogSearch
+                    initialValue={values.connect}
+                    setField={field.onChange}
+                  />
+                </FormControl>
+                <FormDescription>Connect to Next Page</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="pageText"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Page Text</FormLabel>
+                <FormControl>
+                  {/* @ts-ignore */}
+                  <Input placeholder="Main Title" {...field} />
+                </FormControl>
+                <FormDescription>This is the Main Title</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="w-full space-y-1">
+            <h2 className="text-lg">Blog:</h2>
+            <Editor
+              setData={setData}
+              initialData={JSON.parse(values.blog as string)}
             />
           </div>
+          <FaqEditor setValue={form.setValue} />
         </div>
-        <Button type="submit">Submit</Button>
+        <Button size={"lg"} type="submit">
+          Add Blog
+        </Button>
       </form>
     </Form>
   );

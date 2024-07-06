@@ -23,6 +23,7 @@
     "@prisma/client": "^5.12.1",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-radio-group": "^1.2.0",
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
@@ -34,6 +35,7 @@
     "next": "14.1.4",
     "next-auth": "^5.0.0-beta.16",
     "prisma": "^5.12.1",
+    "radio-group": "^0.0.2",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.2",
@@ -43,7 +45,9 @@
     "schema-dts": "^1.1.2",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.22.4"
+    "use-debounce": "^10.0.1",
+    "zod": "^3.22.4",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.12",

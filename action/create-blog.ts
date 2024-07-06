@@ -21,7 +21,7 @@ export const createBlog = async (v: z.infer<typeof BlogSchema>) => {
     return { error: "Please Login Again!" };
   }
 
-  let img = " ";
+  let img = "https://images.drivingexamexpert.com/blogs/6683d1444482e.png";
   const block = JSON.parse(data.blog);
   for (const e of block.blocks) {
     if (e.type === "image") {
