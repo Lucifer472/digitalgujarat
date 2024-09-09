@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
 
-export const GET = async (
-  request: Request,
-  { params }: { params: { url: string } }
-) => {
-  const newUrl = decodeURIComponent(params.url);
+export const GET = async (request: Request) => {
+  const { searchParams } = new URL(request.url);
+
+  const newUrl = decodeURIComponent(searchParams.get("url") as string);
 
   const data = await fetch(newUrl, {
     method: "GET",
