@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { PuffLoader } from "react-spinners";
+import { ClockLoader } from "react-spinners";
 import { GoogleAdSense } from "next-google-adsense";
 
 const LoadingWrapper = () => {
@@ -42,7 +42,7 @@ const LoadingWrapper = () => {
             Loading...
           </span>
           <div className="flex items-center justify-center w-full">
-            <PuffLoader color="#ffffff" />
+            <ClockLoader color="#ffffff" />
           </div>
           <span className="text-white leading-[2em] text-center text-3xl">
             {percentage}%

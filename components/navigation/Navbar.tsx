@@ -15,7 +15,7 @@ const Navbar = () => {
   return (
     <header
       className={cn(
-        "h-16 md:h-20 w-full bg-[#a03131] relative top-0 border-b border-gray-100 shadow-sm z-50"
+        "h-16 md:h-20 w-full bg-main relative top-0 border-b border-gray-100 shadow-sm z-50"
       )}
     >
       <nav className="flex items-center justify-between w-full h-full relative global-container ">
