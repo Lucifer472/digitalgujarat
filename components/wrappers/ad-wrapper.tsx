@@ -1,39 +1,49 @@
 "use client";
+
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
 
 export const AdsWrapper = ({ id, slot }: { id: string; slot: string }) => {
   const pathname = usePathname();
+  const slotIdRef = useRef<googletag.Slot | null>(null);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.googletag) {
-      window.googletag = window.googletag || { cmd: [] };
-      let slotId: googletag.Slot;
-      googletag.cmd.push(() => {
-        if (googletag) {
-          // @ts-ignore
-          slotId = googletag
-            .defineSlot(slot, [336, 280], id)
-            .addService(googletag.pubads());
-          googletag.pubads().enableSingleRequest();
-          googletag.enableServices();
-          googletag.display(id);
-        }
-      });
-
-      // Cleanup: Destroy the ad slot when the component unmounts or page changes
-      return () => {
-        googletag.cmd.push(() => {
-          googletag.destroySlots([slotId]);
-        });
-      };
+    if (typeof window === "undefined" || !window.googletag) {
+      return;
     }
+    window.googletag = window.googletag || { cmd: [] };
+
+    googletag.cmd.push(() => {
+      const slotId = googletag.defineSlot(
+        slot,
+        [[300, 250], [250, 250], [336, 280], [1, 1], "fluid"],
+        id
+      );
+
+      if (slotId) {
+        slotId.addService(googletag.pubads());
+        slotIdRef.current = slotId; // Store the slot reference
+      }
+
+      googletag.pubads().set("page_url", "digitalgujarat.net");
+      googletag.enableServices();
+      googletag.display(id); // Use the passed id prop
+    });
+
+    return () => {
+      if (window.googletag && slotIdRef.current) {
+        googletag.cmd.push(() => {
+          googletag.destroySlots([slotIdRef.current as googletag.Slot]);
+          slotIdRef.current = null;
+        });
+      }
+    };
   }, [id, slot, pathname]);
 
   return (
     <div className="w-full space-y-2">
       <span className="text-[10px] block text-center w-full">SPONSORED</span>
-      <div id={id} style={{ minWidth: "336px", minHeight: "280px" }}></div>
+      <div id={id}></div>
     </div>
   );
 };

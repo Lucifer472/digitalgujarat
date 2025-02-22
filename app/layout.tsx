@@ -9,6 +9,7 @@ import { CardImage, description, keywords, title, url } from "@/constant";
 
 import "@/app/globals.css";
 import Footer from "@/components/footer/Footer";
+import { Scripts } from "@/components/ads/scripts";
 
 // Fonts
 const poppins = Roboto_Slab({
@@ -56,46 +57,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${poppins.className} overflow-x-hidden`}>
-        <Script
-          src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
-          async
-          strategy="afterInteractive"
-          crossOrigin="anonymous"
-        ></Script>
-        <Script strategy="afterInteractive" id="inter-ads" async>
-          {`window.googletag = window.googletag || { cmd: [] };
-          let interstitialSlot;
-          googletag.cmd.push(() => {
-            // Define a web interstitial ad slot.
-            interstitialSlot = (interstitialSlot = googletag.defineOutOfPageSlot(
-              "/22989534981/SN_INTERSTITIAL",
-              googletag.enums.OutOfPageFormat.INTERSTITIAL
-            ));
-
-            // Slot returns null if the page or device does not support interstitials.
-            if (interstitialSlot) {
-              // Enable optional interstitial triggers and register the slot.
-              interstitialSlot.addService(googletag.pubads()).setConfig({
-                interstitial: {
-                  triggers: {
-                    navBar: true,
-                    unhideWindow: true,
-                  },
-                },
-              });
-
-              googletag.enableServices();
-            }
-          });
-          `}
-        </Script>
-        <Script strategy="afterInteractive" id="inter-ads-push" async>
-          {`
-            googletag.cmd.push(() => {
-              googletag.display(interstitialSlot);
-            });
-          `}
-        </Script>
+        <Scripts />
         <Toaster position="top-center" />
         <LoadingWrapper />
         {children}
