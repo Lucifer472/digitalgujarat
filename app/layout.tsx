@@ -57,11 +57,45 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className={`${poppins.className} overflow-x-hidden`}>
         <Script
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8032922547487521"
+          src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
           async
           strategy="afterInteractive"
           crossOrigin="anonymous"
         ></Script>
+        <Script strategy="afterInteractive" id="inter-ads" async>
+          {`window.googletag = window.googletag || { cmd: [] };
+          let interstitialSlot;
+          googletag.cmd.push(() => {
+            // Define a web interstitial ad slot.
+            interstitialSlot = (interstitialSlot = googletag.defineOutOfPageSlot(
+              "/22989534981/SN_INTERSTITIAL",
+              googletag.enums.OutOfPageFormat.INTERSTITIAL
+            ));
+
+            // Slot returns null if the page or device does not support interstitials.
+            if (interstitialSlot) {
+              // Enable optional interstitial triggers and register the slot.
+              interstitialSlot.addService(googletag.pubads()).setConfig({
+                interstitial: {
+                  triggers: {
+                    navBar: true,
+                    unhideWindow: true,
+                  },
+                },
+              });
+
+              googletag.enableServices();
+            }
+          });
+          `}
+        </Script>
+        <Script strategy="afterInteractive" id="inter-ads-push" async>
+          {`
+            googletag.cmd.push(() => {
+              googletag.display(interstitialSlot);
+            });
+          `}
+        </Script>
         <Toaster position="top-center" />
         <LoadingWrapper />
         {children}
