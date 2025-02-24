@@ -1,42 +1,58 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 
 export const AdsWrapper = ({ id, slot }: { id: string; slot: string }) => {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const slotIdRef = useRef<googletag.Slot | null>(null);
 
   useEffect(() => {
-    if (typeof window === "undefined" || !window.googletag) {
-      return;
-    }
-    window.googletag = window.googletag || { cmd: [] };
-
-    // Define the ad slot if it's not already defined
-    googletag.cmd.push(() => {
-      // Check if slot already exists
-      if (!slotIdRef.current) {
-        const slotId = googletag.defineSlot(
-          slot,
-          [[300, 250], [250, 250], [336, 280], [1, 1], "fluid"],
-          id
-        );
-
-        if (slotId) {
-          slotId.addService(googletag.pubads());
-          slotIdRef.current = slotId;
-        }
-
-        googletag.pubads().set("page_url", "digitalgujarat.net");
-        googletag.enableServices();
-        googletag.display(id);
-      } else {
-        // Refresh the ad slot when pathname changes
-        googletag.pubads().refresh([slotIdRef.current]);
+    const ads = () => {
+      if (typeof window === "undefined" || !window.googletag) {
+        return;
       }
-    });
-  }, [id, slot, pathname]);
+      window.googletag = window.googletag || { cmd: [] };
+
+      try {
+        googletag.cmd.push(() => {
+          const slotId = googletag.defineSlot(
+            slot,
+            [[300, 250], [250, 250], [336, 280], [1, 1], "fluid"],
+            id
+          );
+
+          if (slotId) {
+            slotId.addService(googletag.pubads());
+            slotIdRef.current = slotId; // Store the slot reference
+          }
+
+          googletag.pubads().set("page_url", "digitalgujarat.net");
+          googletag.enableServices();
+          googletag.display(id); // Use the passed id prop
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const timeout = setTimeout(() => {
+      ads();
+    }, 500);
+
+    return () => {
+      if (window.googletag && slotIdRef.current) {
+        googletag.cmd.push(() => {
+          googletag.destroySlots([slotIdRef.current as googletag.Slot]);
+          slotIdRef.current = null;
+        });
+      }
+
+      clearTimeout(timeout);
+    };
+  }, [id, slot, pathname, searchParams]);
 
   return (
     <div className="w-full space-y-2">
