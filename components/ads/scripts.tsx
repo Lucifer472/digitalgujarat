@@ -46,6 +46,20 @@ export const Scripts = () => {
                 googletag.enableServices();
             });`}
       </Script>
+      <Script
+        id="tag-manager-script"
+        strategy="afterInteractive"
+        src="https://www.googletagmanager.com/gtag/js?id=G-MQ3RBX3WBZ"
+      ></Script>
+      <Script strategy="afterInteractive" id="tag-manger" async>
+        {`
+           window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-MQ3RBX3WBZ');
+          `}
+      </Script>
     </div>
   );
 };
