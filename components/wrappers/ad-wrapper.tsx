@@ -14,7 +14,6 @@ export const AdsWrapper = ({ id, slot }: { id: string; slot: string }) => {
       if (typeof window === "undefined" || !window.googletag) {
         return;
       }
-      window.googletag = window.googletag || { cmd: [] };
 
       try {
         googletag.cmd.push(() => {

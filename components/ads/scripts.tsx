@@ -9,6 +9,10 @@ export const Scripts = () => {
         strategy="afterInteractive"
         crossOrigin="anonymous"
       ></Script>
+      <Script
+        strategy="afterInteractive"
+        id="google-cmd"
+      >{`window.googletag = window.googletag || { cmd: [] };`}</Script>
       <Script strategy="afterInteractive" id="inter-ads" async>
         {`
         window.googletag = window.googletag || {cmd: []};
@@ -30,10 +34,10 @@ export const Scripts = () => {
             });
     `}
       </Script>
-      <Script
+      {/* <Script
         strategy="afterInteractive"
         src="https://adxtag.online/js/monetiscope_digitalgujarat_pop_up.js"
-      ></Script>
+      ></Script> */}
       {/* <Script strategy="afterInteractive" id="bottom-anchor">
         {`  window.googletag = window.googletag || {cmd: []};
             var anchorSlot;

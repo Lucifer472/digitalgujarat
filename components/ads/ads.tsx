@@ -1,5 +1,6 @@
 "use client";
 import { AdsWrapper } from "@/components/wrappers/ad-wrapper";
+import { usePathname } from "next/navigation";
 import { Suspense, useEffect } from "react";
 
 export const Ad1 = () => {
@@ -91,4 +92,23 @@ export const BottomAnchorAd = () => {
   }, []);
 
   return null; // No visual component, as the ad will float outside the page
+};
+
+export const CustomPopupAd = () => {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const script = document.createElement("script");
+
+    script.src =
+      "https://adxtag.online/js/monetiscope_digitalgujarat_pop_up.js";
+
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, [pathname]);
+
+  return null;
 };
