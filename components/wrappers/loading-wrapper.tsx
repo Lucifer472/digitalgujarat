@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { ClockLoader } from "react-spinners";
-import { GoogleAdSense } from "next-google-adsense";
 
 const LoadingWrapper = () => {
   const [loading, setLoading] = useState(true);
@@ -35,7 +34,6 @@ const LoadingWrapper = () => {
 
   return (
     <>
-      <GoogleAdSense publisherId="pub-8032922547487521" />
       {loading && (
         <div className="w-full h-full min-h-screen bg-main fixed flex items-center justify-center flex-col gap-y-2 z-[9999] overflow-hidden">
           <span className="text-white leading-[2em] text-center text-3xl">
