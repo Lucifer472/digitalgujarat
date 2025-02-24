@@ -55,9 +55,15 @@ export const AdsWrapper = ({ id, slot }: { id: string; slot: string }) => {
   }, [id, slot, pathname, searchParams]);
 
   return (
-    <div className="w-full space-y-2">
+    <div
+      className="w-full space-y-2"
+      style={{
+        minWidth: "360px",
+        minHeight: "300px",
+      }}
+    >
       <span className="text-[10px] block text-center w-full">SPONSORED</span>
-      <div id={id}></div>
+      <div id={id} className="w-full h-full"></div>
     </div>
   );
 };

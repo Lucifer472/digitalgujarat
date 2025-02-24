@@ -34,7 +34,7 @@ export const Scripts = () => {
         strategy="afterInteractive"
         src="https://adxtag.online/js/monetiscope_digitalgujarat_pop_up.js"
       ></Script>
-      <Script strategy="afterInteractive" id="bottom-anchor">
+      {/* <Script strategy="afterInteractive" id="bottom-anchor">
         {`  window.googletag = window.googletag || {cmd: []};
             var anchorSlot;
             googletag.cmd.push(function() {
@@ -45,7 +45,7 @@ export const Scripts = () => {
                 googletag.pubads().enableSingleRequest();
                 googletag.enableServices();
             });`}
-      </Script>
+      </Script> */}
       <Script
         id="tag-manager-script"
         strategy="afterInteractive"

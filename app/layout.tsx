@@ -1,4 +1,3 @@
-import Script from "next/script";
 import { Roboto_Slab } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 
@@ -10,6 +9,7 @@ import { CardImage, description, keywords, title, url } from "@/constant";
 import "@/app/globals.css";
 import Footer from "@/components/footer/Footer";
 import { Scripts } from "@/components/ads/scripts";
+import { BottomAnchorAd } from "@/components/ads/ads";
 
 // Fonts
 const poppins = Roboto_Slab({
@@ -62,6 +62,7 @@ export default function RootLayout({
         <LoadingWrapper />
         {children}
         <Footer />
+        <BottomAnchorAd />
       </body>
     </html>
   );
