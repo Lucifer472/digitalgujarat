@@ -10,36 +10,28 @@ export const AdsWrapper = ({ id, slot }: { id: string; slot: string }) => {
   const slotIdRef = useRef<googletag.Slot | null>(null);
 
   useEffect(() => {
-    const ads = () => {
-      if (typeof window === "undefined" || !window.googletag) {
-        return;
-      }
+    console.log(slotIdRef);
 
-      try {
-        googletag.cmd.push(() => {
-          const slotId = googletag.defineSlot(
-            slot,
-            [[300, 250], [250, 250], [336, 280], [1, 1], "fluid"],
-            id
-          );
+    try {
+      googletag.cmd.push(() => {
+        const slotId = googletag.defineSlot(
+          slot,
+          [[300, 250], [250, 250], [336, 280], [1, 1], "fluid"],
+          id
+        );
 
-          if (slotId) {
-            slotId.addService(googletag.pubads());
-            slotIdRef.current = slotId; // Store the slot reference
-          }
+        if (slotId) {
+          slotId.addService(googletag.pubads());
+          slotIdRef.current = slotId; // Store the slot reference
+        }
 
-          googletag.pubads().set("page_url", "digitalgujarat.net");
-          googletag.enableServices();
-          googletag.display(id); // Use the passed id prop
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const timeout = setTimeout(() => {
-      ads();
-    }, 500);
+        googletag.pubads().set("page_url", "digitalgujarat.net");
+        googletag.enableServices();
+        googletag.display(id); // Use the passed id prop
+      });
+    } catch (error) {
+      console.log(error);
+    }
 
     return () => {
       if (window.googletag && slotIdRef.current) {
@@ -48,8 +40,6 @@ export const AdsWrapper = ({ id, slot }: { id: string; slot: string }) => {
           slotIdRef.current = null;
         });
       }
-
-      clearTimeout(timeout);
     };
   }, [id, slot, pathname, searchParams]);
 
