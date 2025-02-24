@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef } from "react";
 
 export const AdsWrapper = ({ id, slot }: { id: string; slot: string }) => {
   const pathname = usePathname();
@@ -13,31 +13,29 @@ export const AdsWrapper = ({ id, slot }: { id: string; slot: string }) => {
     }
     window.googletag = window.googletag || { cmd: [] };
 
+    // Define the ad slot if it's not already defined
     googletag.cmd.push(() => {
-      const slotId = googletag.defineSlot(
-        slot,
-        [[300, 250], [250, 250], [336, 280], [1, 1], "fluid"],
-        id
-      );
+      // Check if slot already exists
+      if (!slotIdRef.current) {
+        const slotId = googletag.defineSlot(
+          slot,
+          [[300, 250], [250, 250], [336, 280], [1, 1], "fluid"],
+          id
+        );
 
-      if (slotId) {
-        slotId.addService(googletag.pubads());
-        slotIdRef.current = slotId; // Store the slot reference
+        if (slotId) {
+          slotId.addService(googletag.pubads());
+          slotIdRef.current = slotId;
+        }
+
+        googletag.pubads().set("page_url", "digitalgujarat.net");
+        googletag.enableServices();
+        googletag.display(id);
+      } else {
+        // Refresh the ad slot when pathname changes
+        googletag.pubads().refresh([slotIdRef.current]);
       }
-
-      googletag.pubads().set("page_url", "digitalgujarat.net");
-      googletag.enableServices();
-      googletag.display(id); // Use the passed id prop
     });
-
-    return () => {
-      if (window.googletag && slotIdRef.current) {
-        googletag.cmd.push(() => {
-          googletag.destroySlots([slotIdRef.current as googletag.Slot]);
-          slotIdRef.current = null;
-        });
-      }
-    };
   }, [id, slot, pathname]);
 
   return (
